@@ -74,11 +74,11 @@ function Home() {
                 <div>
                     <div className='modal_in m-3'>
                         <label>Enter Game ID</label>
-                        <input className='mt-1 p-1 inp' name='id' style={{ width: '90%' }} onChange={input} />
+                        <input className='mt-1 p-1 inp' name='id'  style={{ width: '90%' }} onChange={input} />
                     </div>
                     <div className='modal_in m-3'>
                         <label>Enter Password</label>
-                        <input className='mt-1 p-1 inp' name='password' style={{ width: '90%' }} onChange={input} />
+                        <input className='mt-1 p-1 inp' type='password' name='password' style={{ width: '90%' }} onChange={input} />
                     </div>
                     <div className='modal_in m-3'>
                         <label>Maximum Player</label>

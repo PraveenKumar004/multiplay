@@ -37,8 +37,6 @@ function Manage() {
         catch (err){
             console.log(err)
         }
-        
-
     }
 
     return (
@@ -46,11 +44,11 @@ function Manage() {
             <Nav />
             <div>
                 <div >
-                    <button onClick={()=>{setnum(2)}} className='m-2 bt' style={{ width: '130px', fontSize: '18px' }}>Dashboard</button>
-                    <button onClick={()=>{setnum(1)}} className='m-2 bt' style={{ width: '130px', fontSize: '18px' }}>Players</button>
-                    <button onClick={handleShow} className='m-2 bt' style={{ width: '160px', fontSize: '18px' }}>Change Passowrd</button>
-                    <button onClick={handleShow} className='m-2 bt' style={{ width: '130px', fontSize: '18px' }}>Delete Game</button>
-                    <button onClick={()=>{navigate('/')}} className='m-2 bt' style={{ width: '130px', fontSize: '18px' }}>Logout</button>
+                    <button onClick={()=>{setnum(2)}} className='m-2 bt' style={{ width: '130px', fontSize: '18px', backgroundColor:'#FF7C3B' }}>Dashboard</button>
+                    <button onClick={()=>{setnum(1)}} className='m-2 bt' style={{ width: '130px', fontSize: '18px',backgroundColor:'#FF7C3B' }}>Players</button>
+                    <button onClick={handleShow} className='m-2 bt' style={{ width: '160px', fontSize: '18px',backgroundColor:'#FF7C3B' }}>Change Passowrd</button>
+                    <button onClick={handleShow} className='m-2 bt' style={{ width: '130px', fontSize: '18px',backgroundColor:'red' }}>Delete Game</button>
+                    <button onClick={()=>{navigate('/')}} className='m-2 bt' style={{ width: '130px', fontSize: '18px',backgroundColor:'#FF7C3B' }}>Logout</button>
                 </div>
                 <div>{page()}</div>
             </div>

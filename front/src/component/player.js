@@ -24,6 +24,22 @@ function Dash() {
         }
     };
 
+    const deleteplayer = async (d)=>{
+        try{
+            const del = await axios.delete(`/deleteplayer/${d.pid}`)
+            console.log(d.pid);
+            if(del.data === "deleted"){
+                window.location.reload();
+            }
+            else{
+                alert("cannot delete")
+            }
+        }
+        catch (err){
+            console.log(err)
+        }
+    }
+
     return (
         <>
             <div className='play_back'>
@@ -32,7 +48,7 @@ function Dash() {
                         <div className='inside_play mt-3'>
                             <label className='m-2'>Name: {value.name} </label>
                             <label className='ms-2'>ID: {value.pid} </label>
-                            <button className='ms-1 bt2' style={{ backgroundColor: 'red' }}>Remove</button>
+                            <button className='ms-1 bt2' style={{ backgroundColor: 'red' }} onClick={()=>{deleteplayer(value)}}>Remove</button>
                         </div>
                     ))}
                 </div>

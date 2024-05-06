@@ -6,7 +6,7 @@ function topNav() {
     <>
 
       <div className='topNav_back'>
-          <div>Dashboard</div>
+          <div className='ms-3 h4 text-white'>Online Game</div>
       </div>
     </>
   )

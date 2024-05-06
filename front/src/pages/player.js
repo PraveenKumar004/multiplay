@@ -86,8 +86,8 @@ function Team() {
             <div>
                 <button
                     onClick={handleShow}
-                    className="m-2 bt"
-                    style={{ width: '130px', fontSize: '18px' }}
+                    className="m-3 bt"
+                    style={{ width: '130px', fontSize: '18px',backgroundColor:'#FF7C3B' }}
                 >
                     New Player
                 </button>
@@ -148,7 +148,7 @@ function Team() {
                         <input
                             className="mt-1 p-1 inp"
                             name="password"
-                            type="number"
+                            type="password"
                             min={1}
                             max={100}
                             style={{ width: '90%' }}
