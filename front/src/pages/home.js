@@ -1,131 +1,224 @@
-import React from 'react';
-import { useState } from 'react';
-import '../style/style.css';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 import Nav from '../component/topNav';
 import Modal from 'react-bootstrap/Modal';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import '../style/style.css';
 
-function Home() {
-    const [val, setvalue] = useState({});
-    const navigate = useNavigate(); 
-
+function Team() {
     const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => {setShow(true); setShow3(false)}
-
     const [show2, setShow2] = useState(false);
+    const handleClose = () => setShow(false);
     const handleClose2 = () => setShow2(false);
+    const handleShow = () => setShow
+    (true);
     const handleShow2 = () => setShow2(true);
+    const [val, setvalue] = useState({
+        name: '',
+        gender: '',
+        age: '',
+    });
+    const [data, setData] = useState([]);
+    const { id } = useParams();
+    const navigate = useNavigate();
 
-    const [show3, setShow3] = useState(false);
-    const handleClose3 = () => setShow3(false);
-    const handleShow3 = () => setShow3(true);
+    useEffect(() => {
+        GetData();
+        console.log(data);
+    }, []);
 
-    const [show4, setShow4] = useState(false);
-    const handleClose4 = () => setShow4(false);
-    const handleShow4 = () => {setShow4(true); setShow3(false)}
+    const GetData = async () => {
+        try {
+            const response = await axios.get(`/player`);
+            setData(Array.isArray(response.data) ? response.data : []);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
 
     const input = (e) => {
         const { name, value } = e.target;
         setvalue({ ...val, [name]: value });
     };
 
-    const createSubmit = async (e) => {
+    const Submit = async (e) => {
         e.preventDefault();
+        console.log(val);
         try {
             const create = await axios.post('/create', val);
-            if (create.data === "Exist") {
-                alert("Already Exist");
-            } else if(create.data === "done"){
-                navigate(`/manager/${val.id}`);
-            }     
+            if (create.data === 'Exist') {
+                alert('Already Exist');
+            } else if (create.data === 'done') {
+                // navigate(`/playerlist/${val.id}`);~
+                window.location.reload();
+
+            }
+            else if (create.data === 'limit') {
+                alert('Reach Limit');
+            }
         } catch (error) {
             console.error('Error creating game:', error);
         }
     };
-    const play = async (e) => {
-        e.preventDefault();
+
+    const deletename = async (e) => {
+        console.log(val);
         try {
-            const create = await axios.post('/contestlog', val);
-            if (create.data === "Exist") {
-                navigate(`/playerlist/${val.id}`);
-            } else if(create.data === "done"){
-                alert("Enter a Valid ID");
-            }     
+            const create = await axios.delete(`/delete/${e}`);
+            if (create.data === "deleted") {
+                window.location.reload();
+            }
         } catch (error) {
             console.error('Error creating game:', error);
         }
     };
+
+    const updated = (d) => {
+        const up = axios.put(`/update/${d}`, val);
+        console.log(up.data);
+        window.location.reload();
+    }
 
     return (
         <>
             <Nav />
-            <div className='home'>
-                <div className='modal_in'>
-                    <button onClick={handleShow3} className='m-2 bt'>Manager</button>
-                    <button onClick={handleShow2} className='m-2 bt'>Contestant</button>
+            <div>
+                <button
+                    onClick={handleShow}
+                    className="m-3 bt"
+                    style={{ width: '130px', fontSize: '18px', backgroundColor: '#ae0c00' }}
+                >
+                    Add
+                </button>
+                <div className="play_back">
+                    <div className="w-75">
+                        {data.map((value) => (
+                            <div>
+
+                                <div className="inside_play mt-3">
+                                    <div className="m-2">
+
+                                    </div>
+                                    <div className='m-2'> Property Name : {value.name}</div>
+                                    <div className='m-2'> Property Location: {value.location}</div>
+                                    <div className='m-2'> Property Price: {value.price}</div>
+                                    <div className='d-flex'>
+                                        <div><button className='bt2 ms-2' onClick={() => {handleShow2(value.name)}}>Edit</button></div>
+                                        <div><button className='bt2 ms-2' onClick={() => { deletename(value.name) }}>Delete</button></div>
+                                    </div>
+
+                                    <Modal show={show2} onHide={handleClose2} centered>
+                                        <Modal.Header closeButton>
+                                            <Modal.Title>Edit</Modal.Title>
+                                        </Modal.Header>
+                                        <div>
+                                            <div className="modal_in m-3">
+                                            </div>
+                                            <div className="modal_in m-3">
+                                                <label>Property Name</label>
+                                                <input
+                                                    className="mt-1 p-1 inp"
+                                                    name="name"
+                                                    min={1}
+                                                    max={100}
+                                                    style={{ width: '90%' }}
+                                                    onChange={input}
+
+                                                />
+                                            </div>
+                                            <div className="modal_in m-3">
+                                                <label>Property Location</label>
+                                                <input
+                                                    className="mt-1 p-1 inp"
+                                                    name="location"
+                                                    min={1}
+                                                    max={100}
+                                                    style={{ width: '90%' }}
+                                                    onChange={input}
+
+                                                />
+                                            </div>
+                                            <div className="modal_in m-3">
+                                                <label>Property Price</label>
+                                                <input
+                                                    className="mt-1 p-1 inp"
+                                                    name="price"
+                                                    min={1}
+                                                    max={100}
+                                                    style={{ width: '90%' }}
+                                                    onChange={input}
+
+                                                />
+                                            </div>
+                                            <button
+                                                className="ms-3 mb-3 bt"
+                                                style={{ width: '100px', fontSize: '17px' }}
+                                                onClick={() => { updated(value.name) }}
+                                            >
+                                                Save
+                                            </button>
+                                        </div>
+                                    </Modal>
+                                </div>
+                            </div>
+
+                        ))}
+                    </div>
                 </div>
             </div>
             <Modal show={show} onHide={handleClose} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>Create Game</Modal.Title>
+                    <Modal.Title>Add Property</Modal.Title>
                 </Modal.Header>
                 <div>
-                    <div className='modal_in m-3'>
-                        <label>Enter Game ID</label>
-                        <input className='mt-1 p-1 inp' name='id'  style={{ width: '90%' }} onChange={input} />
+                    <div className="modal_in m-3">
+
+
+                        <label>Property Name</label>
+                        <input
+                            className="mt-1 p-1 inp"
+                            name="name"
+                            min={1}
+                            max={100}
+                            style={{ width: '90%' }}
+                            onChange={input}
+                        />
                     </div>
-                    <div className='modal_in m-3'>
-                        <label>Enter Password</label>
-                        <input className='mt-1 p-1 inp' type='password' name='password' style={{ width: '90%' }} onChange={input} />
+                    <div className="modal_in m-3">
+                        <label>Property Location</label>
+                        <input
+                            className="mt-1 p-1 inp"
+                            name="location"
+                            min={1}
+                            max={100}
+                            style={{ width: '90%' }}
+                            onChange={input}
+                        />
                     </div>
-                    <div className='modal_in m-3'>
-                        <label>Maximum Player</label>
-                        <input className='mt-1 p-1 inp' name='limit' type='number' min={1} max={100} style={{ width: '90%' }} onChange={input} />
+                <div className="modal_in m-3">
+                        <label>Property Price</label>
+                        <input
+                            className="mt-1 p-1 inp"
+                            name="price"
+                            min={1}
+                            max={100}
+                            style={{ width: '90%' }}
+                            onChange={input}
+                        />
                     </div>
-                    <button className='ms-3 mb-3 bt' style={{ width: '100px', fontSize: '17px' }} onClick={createSubmit}>Create</button>
-                </div>
-            </Modal>
-            <Modal show={show2} onHide={handleClose2} centered>
-                <Modal.Header closeButton>
-                    <Modal.Title>Join Game</Modal.Title>
-                </Modal.Header>
-                <div>
-                    <div className='modal_in m-3'>
-                        <label>Enter Game ID</label>
-                        <input className='mt-1 p-1 inp' name='id' style={{ width: '90%' }} onChange={input} />
-                    </div>
-                    <button className='ms-3 mb-3 bt' style={{ width: '100px', fontSize: '17px' }} onClick={play}>Join</button>
-                </div>
-            </Modal>
-            <Modal show={show3} onHide={handleClose3} centered>
-                <Modal.Header closeButton>
-                    <Modal.Title>Manager</Modal.Title>
-                </Modal.Header>
-                <div className='d-flex flex-column justify-center align-items-center'>
-                    <button onClick={handleShow} className='m-2 bt'>New Game</button>
-                    <button onClick={handleShow4} className='m-2 bt'>Existing Game</button>
-                </div>
-            </Modal>
-            <Modal show={show4} onHide={handleClose4} centered>
-                <Modal.Header closeButton>
-                    <Modal.Title>Login Game</Modal.Title>
-                </Modal.Header>
-                <div>
-                    <div className='modal_in m-3'>
-                        <label>Enter Game ID</label>
-                        <input className='mt-1 p-1 inp' name='id' style={{ width: '90%' }} onChange={input} />
-                    </div>
-                    <div className='modal_in m-3'>
-                        <label>Enter Password</label>
-                        <input className='mt-1 p-1 inp' name='password' style={{ width: '90%' }} onChange={input} />
-                    </div>
-                    <button className='ms-3 mb-3 bt' style={{ width: '100px', fontSize: '17px' }} onClick={createSubmit}>Login</button>
+
+                    <button
+                        className="ms-3 mb-3 bt"
+                        style={{ width: '100px', fontSize: '17px' }}
+                        onClick={Submit}
+                    >
+                        Add
+                    </button>
                 </div>
             </Modal>
         </>
-    )
+    );
 }
 
-export default Home;
+export default Team;
