@@ -6,7 +6,7 @@ function topNav() {
     <>
 
       <div className='topNav_back' style={{backgroundColor:'#cb4154'}}>
-          <div className='ms-3 h4 text-white'>Properties Listing</div>
+          <div className='ms-3 h4 text-white'>Multiplayer Game room</div>
       </div>
     </>
   )

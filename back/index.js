@@ -20,8 +20,8 @@ app.get('/player', async (req, res) => {
 
 app.post('/create', async (req, res) => {
     try {
-        const { name, location,price  } = req.body;
-        DataBase.push({ name, location,price  })
+        const { name, id,password  } = req.body;
+        DataBase.push({ name, id,password  })
         .then(res.json('done'))
         .catch(res.json("not"));
        
@@ -51,19 +51,19 @@ app.delete('/delete/:id', async (req, res) => {
     }
 });
 
-app.put('/update/:id', (req, res) => {
-    const { id } = req.params;
-    const { name , location,price} = req.body;
+app.put('/update/:ids', (req, res) => {
+    const { ids } = req.params;
+    const { name , id,password} = req.body;
     console.log(id)
     console.log(DataBase)
-    const dataIndex = DataBase.findIndex(data => data.name === id);
+    const dataIndex = DataBase.findIndex(data => data.name === ids);
 
     if (dataIndex === -1) {
         console.log("Properity not found");
     } else {
         DataBase[dataIndex].name = name;
-        DataBase[dataIndex].price = price;
-        DataBase[dataIndex].location = location;
+        DataBase[dataIndex].id = id;
+        DataBase[dataIndex].password = password;
         console.log('properity updated'); 
     }
     res.json('update');

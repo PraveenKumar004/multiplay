@@ -13,11 +13,7 @@ function Team() {
     const handleShow = () => setShow
     (true);
     const handleShow2 = () => setShow2(true);
-    const [val, setvalue] = useState({
-        name: '',
-        gender: '',
-        age: '',
-    });
+    const [val, setvalue] = useState({});
     const [data, setData] = useState([]);
     const { id } = useParams();
     const navigate = useNavigate();
@@ -89,7 +85,7 @@ function Team() {
                     className="m-3 bt"
                     style={{ width: '130px', fontSize: '18px', backgroundColor: '#ae0c00' }}
                 >
-                    Add
+                    Add Player
                 </button>
                 <div className="play_back">
                     <div className="w-75">
@@ -100,9 +96,9 @@ function Team() {
                                     <div className="m-2">
 
                                     </div>
-                                    <div className='m-2'> Property Name : {value.name}</div>
-                                    <div className='m-2'> Property Location: {value.location}</div>
-                                    <div className='m-2'> Property Price: {value.price}</div>
+                                    <div className='m-2'> Player Name : {value.name}</div>
+                                    <div className='m-2'> Player ID : {value.id}</div>
+                                    <div className='m-2'> Player Password : {value.password}</div>
                                     <div className='d-flex'>
                                         <div><button className='bt2 ms-2' onClick={() => {handleShow2(value.name)}}>Edit</button></div>
                                         <div><button className='bt2 ms-2' onClick={() => { deletename(value.name) }}>Delete</button></div>
@@ -116,36 +112,31 @@ function Team() {
                                             <div className="modal_in m-3">
                                             </div>
                                             <div className="modal_in m-3">
-                                                <label>Property Name</label>
+                                                <label>Player Name</label>
                                                 <input
                                                     className="mt-1 p-1 inp"
                                                     name="name"
-                                                    min={1}
-                                                    max={100}
                                                     style={{ width: '90%' }}
                                                     onChange={input}
 
                                                 />
                                             </div>
                                             <div className="modal_in m-3">
-                                                <label>Property Location</label>
+                                                <label>Player ID</label>
                                                 <input
                                                     className="mt-1 p-1 inp"
-                                                    name="location"
-                                                    min={1}
-                                                    max={100}
+                                                    name="id"
+                                                    type='number'
                                                     style={{ width: '90%' }}
                                                     onChange={input}
 
                                                 />
                                             </div>
                                             <div className="modal_in m-3">
-                                                <label>Property Price</label>
+                                                <label>Player Password</label>
                                                 <input
                                                     className="mt-1 p-1 inp"
-                                                    name="price"
-                                                    min={1}
-                                                    max={100}
+                                                    name="password"
                                                     style={{ width: '90%' }}
                                                     onChange={input}
 
@@ -169,13 +160,13 @@ function Team() {
             </div>
             <Modal show={show} onHide={handleClose} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>Add Property</Modal.Title>
+                    <Modal.Title>Add Player</Modal.Title>
                 </Modal.Header>
                 <div>
                     <div className="modal_in m-3">
 
 
-                        <label>Property Name</label>
+                        <label>Player Name</label>
                         <input
                             className="mt-1 p-1 inp"
                             name="name"
@@ -186,21 +177,20 @@ function Team() {
                         />
                     </div>
                     <div className="modal_in m-3">
-                        <label>Property Location</label>
+                        <label>Player ID</label>
                         <input
                             className="mt-1 p-1 inp"
-                            name="location"
-                            min={1}
-                            max={100}
+                            name="id"
+                            type='number'
                             style={{ width: '90%' }}
                             onChange={input}
                         />
                     </div>
                 <div className="modal_in m-3">
-                        <label>Property Price</label>
+                        <label>Player Password</label>
                         <input
                             className="mt-1 p-1 inp"
-                            name="price"
+                            name="password"
                             min={1}
                             max={100}
                             style={{ width: '90%' }}
